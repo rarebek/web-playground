@@ -3,19 +3,21 @@ package repo
 import (
 	"database/sql"
 
-	s "github.com/Masterminds/squirrel"
+	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
 	"github.com/rarebek/web-playground/models"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type Repo struct {
-	DB *sql.DB
+	DB      *sql.DB
+	builder sq.StatementBuilderType
 }
 
 func NewRepo(db *sql.DB) *Repo {
 	return &Repo{
-		DB: db,
+		DB:      db,
+		builder: sq.StatementBuilder.PlaceholderFormat(sq.Dollar),
 	}
 }
 
@@ -25,7 +27,10 @@ func (r *Repo) InsertUser(user models.User) error {
 		return err
 	}
 
-	query, args, err := s.Insert("users").Columns("id, username, password").Values(uuid.NewString(), user.Username, hashedPassword).ToSql()
+	query, args, err := r.builder.Insert("users").
+		Columns("id", "email", "password").
+		Values(uuid.NewString(), user.Username, hashedPassword).
+		ToSql()
 	if err != nil {
 		return err
 	}

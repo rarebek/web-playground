@@ -1,0 +1,56 @@
+basePath: /api/v1
+definitions:
+  models.Response:
+    properties:
+      message:
+        type: string
+    type: object
+  models.User:
+    properties:
+      id:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:6655
+info:
+  contact:
+    email: nomonovn2@gmail.com
+    name: Nodirbek
+  description: A beautiful API documentation for Web Playground
+  title: Web Playground API
+  version: "1.0"
+paths:
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user in the system
+      parameters:
+      - description: User registration details
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User created successfully
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Invalid body
+          schema:
+            $ref: '#/definitions/models.Response'
+        "500":
+          description: Internal server error happened
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Register a new user
+      tags:
+      - users
+swagger: "2.0"

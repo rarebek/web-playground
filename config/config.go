@@ -7,11 +7,11 @@ import (
 )
 
 type Config struct {
-	PG_HOST     string
-	PG_PORT     int
-	PG_USERNAME string
-	PG_PASS     string
-	PG_DB       string
+	PgHost     string
+	PgPort     int
+	PgUsername string
+	PgPass     string
+	PgDb       string
 }
 
 func Load() (*Config, error) {
@@ -27,10 +27,10 @@ func Load() (*Config, error) {
 	}
 
 	return &Config{
-		PG_HOST:     PgHost,
-		PG_PORT:     PgPortInt,
-		PG_USERNAME: PgUsername,
-		PG_PASS:     PgPass,
-		PG_DB:       PgDb,
+		PgHost:     PgHost,
+		PgPort:     PgPortInt,
+		PgUsername: PgUsername,
+		PgPass:     PgPass,
+		PgDb:       PgDb,
 	}, nil
 }
